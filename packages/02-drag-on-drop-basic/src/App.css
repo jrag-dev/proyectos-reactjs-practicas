@@ -1,0 +1,53 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.main {
+  width: 100%;
+}
+
+.title {
+  margin: 2rem 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.layout-cards {
+  background-color: #ccc;
+  border: 1px solid #252525;
+  min-height: 400px;
+}
+
+.layout-dragging {
+  border: 2px dashed crimson;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 1rem;
+}
+
+.card-item {
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.card-item:hover {
+  border: 2px dashed green;
+}
+
+.status {
+  background-color: #252525;
+  color: #f2f2f2;
+  padding: 1rem;
+}
