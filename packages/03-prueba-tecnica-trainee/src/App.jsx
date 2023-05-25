@@ -1,48 +1,29 @@
 import { useState, useEffect } from 'react'
+import { useFetchFact } from './hooks/useFetchFact'
+import { useFetchCat } from './hooks/useFetchCat'
+
 import './App.css'
 
 
-const FACT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact'
 //const CAT_ENDPOINT_IMAGE_URL = `https://cataas.com/cat/says/${firstWord}?size=50&color=red&json=true`
 
 function App() {
-  
-  const [factString, setFact] = useState('')
-  const [imagenCat, setImagenCat] = useState(null)
-  
-  useEffect(() => {
-    const getRandomFact = async () => {
-      const respFact = await fetch(FACT_ENDPOINT_RANDOM_FACT)
-      const { fact } = await respFact.json()
-      setFact(prevState => (fact))
-    }
-    getRandomFact()
-  }, [])
-  
-    useEffect(() => {
-      if (!factString) return
-    
-      const getRandomFact = async () => {
-      const threeFirstWords = factString.split(' ').slice(0, 3).join(' ')
-      const respCat = await fetch(`https://cataas.com/cat/says/${threeFirstWords}?size=50&color=red&json=true`)
-      const { url } = await respCat.json()
-      console.log(url)
-      setImagenCat(url)
-    }
-    
-    getRandomFact()
-  }, [factString])
+  const { factString } = useFetchFact()
+  const { imagenCat } = useFetchCat(factString)
 
   return (
     <>
-      <h2>Recuperando datos de la api</h2>
-      {
-        factString ? <p>{factString}</p> : 'cargando fact ...'
-      }
+      <h2>Image Cat With three First Words Fact</h2>
+      <div className="paragraph-fact">
+        {
+          factString ? <p>{factString}</p> : 'cargando fact ...'
+        }
+      </div>
       {
         imagenCat && (
           <img
-            src={`https://cataas.com/${imagenCat}`}
+            className="img-cat"
+            src={`${import.meta.env.VITE_URL_CAT}${imagenCat}`}
             alt={`Image extracted using the first three words for ${factString}`}
           />
         )
