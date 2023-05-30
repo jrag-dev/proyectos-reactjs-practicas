@@ -14,6 +14,8 @@ Requerimientos:
 - NEcesita mostrar un input para buscar una pelicula y un boton para buscar.
 - Lista las peliculas encontradas y muestra el titulo, año y poster.
 - Haz que las peliculas encontradas se muestren en yn grid responsive.
+- Hacer que el formulario funcione
+- Hacer el fetching de datos
 
 Primera iteracion:
 
