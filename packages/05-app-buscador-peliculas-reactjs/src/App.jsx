@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { ListMoviesComponent } from './components/ListMoviesComponent'
 import responseWithoutMovies from './mocks/without-results.json'
@@ -9,19 +9,24 @@ import './App.scss'
 
 
 function App() {
-  const { hasMovies, mappedMovies } = useMovies()
-  const { query, error, handleChange, handleSubmit } = useSearch()
+  const [sort, setSort] = useState(false)
+  const { query, error, handleChange, setQuery } = useSearch()
+  const { hasMovies, movies, getMovies, loading } = useMovies({ query, sort })
   
-  /*
-  // Forma no controlada
-  const inputRef = useRef()
+  const handleSort = () => {
+    setSort(!sort)
+  }
   
   const handleSubmit = (event) => {
     event.preventDefault()
-    const fields = Object.fromEntries(new window.FormData(event.target))
-    console.log(fields)
+    
+    if (query === '') return
+    
+    getMovies(query)
+    
+    setQuery('')
   }
-  */
+  
   return (
     <>
       <header className="header">
@@ -35,6 +40,7 @@ function App() {
               onChange={handleChange}
               value={query} 
             />
+            <input type="checkbox" onChange={handleSort} checked={sort} />
             <button type="submit">Buscar</button>
           </div>
           {
@@ -53,15 +59,18 @@ function App() {
             {            
               hasMovies 
                 ? (
-                  mappedMovies.map(movie => (
+                  movies.map(movie => (
                     <ListMoviesComponent
                       key={movie.id}
                       movie={movie}
                     />
                   ))
                 )
+                : loading ? (
+                  <p>cargando...</p>
+                ) 
                 : (
-                  <p>{responseWithoutMovies.error}</p>
+                  <p>Busca las peliculas por su nombre...</p>
                 )
             }
           </ul>
